@@ -1,0 +1,77 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:AvaloniaApplication1.ViewModels;assembly=AvaloniaApplication1"
+        xmlns:view="clr-namespace:AvaloniaApplication1.Views;assembly=AvaloniaApplication1"
+        Icon="resm:AvaloniaApplication1.Assets.avalonia-logo.ico"
+        Title="AvaloniaApplication1"
+        xmlns:local="clr-namespace:AvaloniaApplication1.Views"
+        xmlns:dataTable="clr-namespace:System.Data;assembly=System.Data.dll">
+
+  <Window.Resources>
+    <vm:ViewItemConverter x:Key="ViewItemConverter"/>
+      
+  </Window.Resources>
+  
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <DockPanel>
+        <!--<DockPanel.Resources>
+            <Style>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+        </DockPanel.Resources>-->
+    <view:OnScreenKeyboard  DockPanel.Dock="Bottom"/>
+
+    <TabControl>
+      <TabItem Header="Beiträge">
+        <DockPanel>
+          <DockPanel DockPanel.Dock="Right">
+            <ListBox Items="{Binding Drives}"/>
+          </DockPanel>
+          
+          <ListBox Tag="{Binding}" Items="{Binding DivineServices.Rows}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <ItemsControl Items="{Binding Converter={StaticResource ViewItemConverter}}">
+                  <ItemsControl.DataTemplates>
+                    <DataTemplate DataType="{x:Type vm:ViewItemButton}">
+                       <Button Tag="{Binding}" DockPanel.Dock="Right" Content=" > "/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:LastViewItemObject}">
+                      <DockPanel>
+                        <Button Tag="{Binding}" DockPanel.Dock="Right" Content=" > "/>
+                        <TextBlock Background="{Binding BackgroundColor}"  FontSize="18" TextAlignment="Left" Text="{Binding Text}" MinWidth="{Binding Width}"/>
+                      </DockPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:ViewItemObject}">
+                      <TextBlock Background="{Binding BackgroundColor}"  FontSize="18" TextAlignment="Center" Text="{Binding Text}" MinWidth="{Binding Width}"/>
+                    </DataTemplate>
+                  </ItemsControl.DataTemplates>
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <DockPanel>
+                      <!--<StackPanel Orientation="Horizontal">-->
+                        <!--<Button DockPanel.Dock="Right" Content=" > "/>-->
+                      </DockPanel>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                    <ContentControl Content="{Binding}"/>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="Fehler">
+        <ListBox Items="{Binding Errors}"/>
+      </TabItem>
+  </TabControl>
+  </DockPanel>
+</Window>

@@ -1,0 +1,124 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             MinWidth="900"
+             MinHeight="250"
+             xmlns:local="clr-namespace:AvaloniaApplication1.Views">
+  <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="FontSize" Value="18"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="BorderBrush" Value="lightgray"/>
+    </Style>
+  </UserControl.Styles>
+  <Grid Name="allKeysGrid" Grid.Row="1" Background="Black">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="75*"/>
+      <ColumnDefinition Width="25*"/>
+    </Grid.ColumnDefinitions>
+    <Grid Name="keyboardGrid" Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="25*"/>
+        <RowDefinition Height="25*"/>
+        <RowDefinition Height="25*"/>
+        <RowDefinition Height="25*"/>
+      </Grid.RowDefinitions>
+      <Button Name="qButton" Content="Q" CommandParameter="Q" Grid.Row="0" Grid.Column="0" />
+      <Button Name="wButton" Content="W" CommandParameter="W" Grid.Row="0" Grid.Column="1" />
+      <Button Name="eButton" Content="E" CommandParameter="E" Grid.Row="0" Grid.Column="2" />
+      <Button Name="rButton" Content="R" CommandParameter="R" Grid.Row="0" Grid.Column="3" />
+      <Button Name="tButton" Content="T" CommandParameter="T" Grid.Row="0" Grid.Column="4" />
+      <Button Name="zButton" Content="Z" CommandParameter="Z" Grid.Row="0" Grid.Column="5" />
+      <Button Name="uButton"  Content="U" CommandParameter="U" Grid.Row="0" Grid.Column="6" />
+      <Button Name="iButton"  Content="I" CommandParameter="I" Grid.Row="0" Grid.Column="7" />
+      <Button Name="oButton"  Content="O" CommandParameter="O" Grid.Row="0" Grid.Column="8" />
+      <Button Name="pButton"  Content="P" CommandParameter="P" Grid.Row="0" Grid.Column="9" />
+      <Button Name="ueButton"  Content="Ü" CommandParameter="Ü" Grid.Row="0" Grid.Column="10" />
+      <Button Name="ssButton"  Content="ß" CommandParameter="ß" Grid.Row="0" Grid.Column="11" />
+      <Button Name="plusButton"  Content="+" CommandParameter="ADD" Grid.Row="0" Grid.Column="12" />
+      <Button Name="minusButton"  Content="-" CommandParameter="SUBTRACT" Grid.Row="0" Grid.Column="13" />
+      <Button Name="aButton"  Content="A" CommandParameter="A" Grid.Row="1" Grid.Column="0" />
+      <Button Name="sButton"  Content="S" CommandParameter="S" Grid.Row="1" Grid.Column="1" />
+      <Button Name="dButton"  Content="D" CommandParameter="D" Grid.Row="1" Grid.Column="2" />
+      <Button Name="fButton"  Content="F" CommandParameter="F" Grid.Row="1" Grid.Column="3" />
+      <Button Name="gButton"  Content="G" CommandParameter="G" Grid.Row="1" Grid.Column="4" />
+      <Button Name="hButton"  Content="H" CommandParameter="H" Grid.Row="1" Grid.Column="5" />
+      <Button Name="jButton"  Content="J" CommandParameter="J" Grid.Row="1" Grid.Column="6" />
+      <Button Name="kButton"  Content="K" CommandParameter="K" Grid.Row="1" Grid.Column="7" />
+      <Button Name="lButton"  Content="L" CommandParameter="L" Grid.Row="1" Grid.Column="8" />
+      <Button Name="oeButton"  Content="Ö" CommandParameter="Ö" Grid.Row="1" Grid.Column="9" />
+      <Button Name="aeButton"  Content="Ä" CommandParameter="Ä" Grid.Row="1" Grid.Column="10" />
+      <Button Name="colonButton"  Content=":" CommandParameter=":" Grid.Row="1" Grid.Column="11" />
+      <Button Name="yButton"  Content="Y" CommandParameter="Y" Grid.Row="2" Grid.Column="0" />
+      <Button Name="xButton"  Content="X" CommandParameter="X" Grid.Row="2" Grid.Column="1" />
+      <Button Name="cButton"  Content="C" CommandParameter="C" Grid.Row="2" Grid.Column="2" />
+      <Button Name="vButton"  Content="V" CommandParameter="V" Grid.Row="2" Grid.Column="3" />
+      <Button Name="bButton"  Content="B" CommandParameter="B" Grid.Row="2" Grid.Column="4" />
+      <Button Name="nButton"  Content="N" CommandParameter="N" Grid.Row="2" Grid.Column="5" />
+      <Button Name="mButton"  Content="M" CommandParameter="M" Grid.Row="2" Grid.Column="6" />
+      <Button Name="sboButton"  Content="(" CommandParameter="(" Grid.Row="2" Grid.Column="7" />
+      <Button Name="sbcButton"  Content=")" CommandParameter=")" Grid.Row="2" Grid.Column="8" />
+      <Button Name="fslashButton"  Content="/" CommandParameter="/" Grid.Row="2" Grid.Column="9" />
+      <Button Name="commarButton"  Content="," CommandParameter="," Grid.Row="2" Grid.Column="10" />
+      <Button Name="dotButton"  Content="." CommandParameter="." Grid.Row="2" Grid.Column="11" />
+      <Button Name="crlfButton" CommandParameter="ENTER" Grid.Row="1" Grid.Column="12" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Canvas Width="48" Height="48">
+          <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+          </Canvas.RenderTransform>
+          <Canvas.Resources/>
+          <Path  Data="M0 0h48v48h-48z"/>
+          <Path  Fill="#000000" Data="M38 14v8h-26.34l7.17-7.17-2.83-2.83-12 12 12 12 2.83-2.83-7.17-7.17h30.34v-12z"/>
+        </Canvas>
+      </Button>
+      <Button Name="shiftButton"  Content="abc" CommandParameter="SHIFT" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
+      <Button Name="spaceButton"  Content="" CommandParameter=" " Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="5" />
+      <Button Name="backspaceButton" CommandParameter="BACKSPACE" Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="2">
+        <Canvas Width="32" Height="32">
+          <Path Fill="#FF000000" Data="  M 10.8 5.76   L 10.8 5.76   L 5.68 10.8   L 0.64 15.84   L 5.68 21.04   L 10.8 26.16   L 31.28 26.16   L 31.28 5.76   L 21.04 5.76  z    M 29.2 24.08   L 11.76 24.08   L 11.68 24.08   L 7.6 20   L 3.52 15.92   L 7.6 11.84   L 11.68 7.76   L 29.2 7.76  z   "/>
+          <Path Fill="#FF000000" Data="  M 16.4 22.08   L 21.04 17.44   L 23.44 19.76   L 25.76 22.08   L 26.48 21.36   L 27.2 20.56   L 24.8 18.24   L 22.48 15.92   L 24.8 13.6   L 27.2 11.2   L 26.4 10.48   L 25.68 9.84   L 21.04 14.48   L 18.64 12.16   L 16.32 9.84   L 15.6 10.56   L 14.88 11.28   L 19.6 15.92   L 17.28 18.32   L 14.88 20.64   L 15.68 21.36   L 16.4 22.08  z "/>
+        </Canvas>
+      </Button>
+      <Button Name="leftButton"  Content="&lt;-" CommandParameter="LEFT" Grid.Row="3" Grid.Column="10" Grid.ColumnSpan="2" />
+      <Button Name="rightButton"  Content="->" CommandParameter="RIGHT" Grid.Row="3" Grid.Column="12" Grid.ColumnSpan="2" />
+    </Grid>
+    <Grid Name="keyPadGrid" Grid.Column="1" Margin="12,0,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+        <ColumnDefinition Width="10*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="25*"/>
+        <RowDefinition Height="25*"/>
+        <RowDefinition Height="25*"/>
+        <RowDefinition Height="25*"/>
+      </Grid.RowDefinitions>
+      <Button Name="sevenButton"  Content="7" CommandParameter="7" Grid.Row="0" Grid.Column="0" />
+      <Button Name="eightButton"  Content="8" CommandParameter="8" Grid.Row="0" Grid.Column="1" />
+      <Button Name="nineButton"  Content="9" CommandParameter="9" Grid.Row="0" Grid.Column="2" />
+      <Button Name="fourButton"  Content="4" CommandParameter="4" Grid.Row="1" Grid.Column="0" />
+      <Button Name="fiveButton"  Content="5" CommandParameter="5" Grid.Row="1" Grid.Column="1" />
+      <Button Name="sixButton"  Content="6" CommandParameter="6" Grid.Row="1" Grid.Column="2" />
+      <Button Name="oneButton"  Content="1" CommandParameter="1" Grid.Row="2" Grid.Column="0" />
+      <Button Name="twoButton"  Content="2" CommandParameter="2" Grid.Row="2" Grid.Column="1" />
+      <Button Name="threeButton"  Content="3" CommandParameter="3" Grid.Row="2" Grid.Column="2" />
+      <Button Name="zeroButton"  Content="0" CommandParameter="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
+    </Grid>
+  </Grid>
+</UserControl>
