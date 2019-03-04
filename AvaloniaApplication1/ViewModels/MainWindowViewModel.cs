@@ -81,7 +81,7 @@ namespace AvaloniaApplication1.ViewModels
             {
                 if (dbAdapter == null)
                 {
-                    string sqlDbPath = "Server=nas-bbh;User ID=audio;Password=1udio;Database=audio;";
+                    string sqlDbPath = "Server=dietpi;User ID=audio;Password=1udio;Database=audio;";
 
                     DbFactory dbFactory = new DbFactory(MySqlClientFactory.Instance)
                     {

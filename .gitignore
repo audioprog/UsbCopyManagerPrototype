@@ -1,7 +1,7 @@
 /.vs/*
 /Avalonia.DataGrid
-/AvaloniaApplication1/bin/Debug/netcoreapp2.0/*.dll
-/AvaloniaApplication1/bin/Debug/netcoreapp2.0/*.pdb
+/AvaloniaApplication1/bin/Debug/netcoreapp*/*.dll
+/AvaloniaApplication1/bin/Debug/netcoreapp*/*.pdb
 /AvaloniaApplication1/obj
 /audio.sql
 /DataGrid
