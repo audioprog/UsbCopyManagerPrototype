@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace AvaloniaApplication1.ViewModels
@@ -41,12 +42,46 @@ namespace AvaloniaApplication1.ViewModels
             DriveInfo[] drives = DriveInfo.GetDrives();
             foreach (DriveInfo drive in drives)
             {
-                if (!drive.IsReady || drive.DriveType != DriveType.Removable)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    if (!drive.IsReady || drive.DriveType != DriveType.Fixed || drive.RootDirectory.FullName == "/")
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        switch (drive.DriveFormat)
+                        {
+                            case "sysfs":
+                            case "proc":
+                            case "tmpfs":
+                            case "securityfs":
+                            case "devpts":
+                            case "cgroupfs":
+                            case "pstorefs":
+                            case "selinux":
+                            case "binfmt_misc":
+                            case "hugetlbfs":
+                            case "rpc_pipefs":
+                                continue;
+                        }
+
+                        switch (drive.RootDirectory.FullName)
+                        {
+                            case "/boot":
+                            case "/boot/efi":
+                            case "/home":
+                                continue;
+                        }
+                    }
+                }
+                // Linux DriverType == Fixed
+                else if (!drive.IsReady || drive.DriveType != DriveType.Removable)
                 {
                     continue;
                 }
 
-                string name = drive.VolumeLabel;
+                string name = drive.VolumeLabel.Remove(0, drive.VolumeLabel.LastIndexOf('/') + 1);
                 if (string.IsNullOrEmpty(name))
                 {
                     name = drive.Name;
