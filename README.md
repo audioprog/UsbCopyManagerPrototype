@@ -1,0 +1,2 @@
+# UsbCopyManagerPrototype
+Prototype
