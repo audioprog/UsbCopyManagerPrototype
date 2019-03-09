@@ -76,10 +76,20 @@
       </TabItem>
       
       <TabItem Header="Einstellungen">
-        <Grid ColumnDefinitions="*,*" RowDefinitions="auto,auto,auto,*">
+        <Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto,auto,*">
           <Button Content="OK" Command="{Binding SaveSettingsCommand}"/>
+          
           <TextBlock  Grid.Row="1" Text="ServerName:"/>
-          <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ServerName}"/>
+          <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.DBConnectionSettings.ServerName}"/>
+
+          <TextBlock Grid.Row="2" Text="DatabaseName:"/>
+          <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.DBConnectionSettings.DatabaseName}"/>
+
+          <TextBlock Grid.Row="3" Text="UserName:"/>
+          <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.DBConnectionSettings.UserName}"/>
+
+          <TextBlock Grid.Row="4" Text="Password:"/>
+          <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Settings.DBConnectionSettings.Password}"/>
         </Grid>
       </TabItem>
     </TabControl>

@@ -128,7 +128,10 @@ namespace AvaloniaApplication1.ViewModels
             {
                 if (dbAdapter == null)
                 {
-                    string sqlDbPath = $"Server={Settings.ServerName};User ID=audio;Password=1udio;Database=audio;";
+                    string sqlDbPath = $"Server={Settings.DBConnectionSettings.ServerName};"
+                                       + $"User ID={Settings.DBConnectionSettings.UserName};"
+                                       + $"Password={Settings.DBConnectionSettings.Password};"
+                                       + $"Database={Settings.DBConnectionSettings.DatabaseName};";
 
                     DbFactory dbFactory = new DbFactory(MySqlClientFactory.Instance)
                     {

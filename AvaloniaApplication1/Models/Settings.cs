@@ -56,13 +56,8 @@ namespace AvaloniaApplication1.Models
             }
         };
 
-        private string serverName = "nas-bbh";
 
-        public string ServerName
-        {
-            get => serverName;
-            set => this.RaiseAndSetIfChanged(ref serverName, value);
-        }
+        public DataBaseConnectionSettings DBConnectionSettings { get; set; } = new DataBaseConnectionSettings();
 
 
         public bool SaveSettings()
