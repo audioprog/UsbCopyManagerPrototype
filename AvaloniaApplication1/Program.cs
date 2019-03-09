@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Logging.Serilog;
 using AvaloniaApplication1.ViewModels;
 using AvaloniaApplication1.Views;
+using Serilog;
 
 namespace AvaloniaApplication1
 {
@@ -10,6 +11,12 @@ namespace AvaloniaApplication1
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("logfile.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             BuildAvaloniaApp().Start<MainWindow>(() => new MainWindowViewModel());
         }
 

@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Input;
 
 namespace AvaloniaApplication1.ViewModels
 {
@@ -18,6 +19,19 @@ namespace AvaloniaApplication1.ViewModels
     {
         public MainWindowViewModel()
         {
+            try
+            {
+                tables = DbAdapter.Select(new Query(new QTable("INFORMATION_SCHEMA.tables", null),
+                                    (QField)"TABLE_SCHEMA" != (QConst)"INFORMATION_SCHEMA" &
+                                    (QField)"TABLE_SCHEMA" != (QConst)"MYSQL" &
+                                    (QField)"TABLE_SCHEMA" != (QConst)"PERFORMANCE_SCHEMA"
+                                    ).Select("TABLE_NAME")).ToList<string>();
+            }
+            catch (Exception e)
+            {
+                Errors.Add(e.ToString());
+            }
+
             List<QField> fields = new List<QField>();
             foreach (string field in Settings.DivineService.Fields)
             {
@@ -89,18 +103,16 @@ namespace AvaloniaApplication1.ViewModels
 
                 Drives.Add(name);
             }
+
+            SaveSettingsCommand = ReactiveCommand.Create(() => { Settings.SaveSettings(); });
         }
 
         public ViewMainHeader MainHeader { get; } = new ViewMainHeader();
 
-        public Settings Settings { get; } = new Settings();
+        public Settings Settings { get; } = Settings.LoadSettings();
 
 
-        private List<string> tables = DbAdapter.Select(new Query(new QTable("INFORMATION_SCHEMA.tables", null),
-                                (QField)"TABLE_SCHEMA" != (QConst)"INFORMATION_SCHEMA" &
-                                (QField)"TABLE_SCHEMA" != (QConst)"MYSQL" &
-                                (QField)"TABLE_SCHEMA" != (QConst)"PERFORMANCE_SCHEMA"
-                                ).Select("TABLE_NAME")).ToList<string>();
+        private List<string> tables;
 
         public List<string> Tables
         {
@@ -109,14 +121,14 @@ namespace AvaloniaApplication1.ViewModels
         }
 
 
-        private static DbDataAdapter dbAdapter = null;
-        public static DbDataAdapter DbAdapter
+        private DbDataAdapter dbAdapter = null;
+        public DbDataAdapter DbAdapter
         {
             get
             {
                 if (dbAdapter == null)
                 {
-                    string sqlDbPath = "Server=dietpi;User ID=audio;Password=1udio;Database=audio;";
+                    string sqlDbPath = $"Server={Settings.ServerName};User ID=audio;Password=1udio;Database=audio;";
 
                     DbFactory dbFactory = new DbFactory(MySqlClientFactory.Instance)
                     {
@@ -145,5 +157,9 @@ namespace AvaloniaApplication1.ViewModels
         public ObservableCollection<string> Errors { get; } = new ObservableCollection<string>();
 
         public ObservableCollection<string> Drives { get; set; } = new ObservableCollection<string>();
+
+
+        public ICommand SaveSettingsCommand { get; }
+
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using System.ComponentModel;
+using Serilog;
+using System;
 
 namespace AvaloniaApplication1.Views
 {
@@ -16,7 +19,14 @@ namespace AvaloniaApplication1.Views
 
         private void InitializeComponent()
         {
-            AvaloniaXamlLoader.Load(this);
+            try
+            {
+                AvaloniaXamlLoader.Load(this);
+            }
+            catch (Exception e)
+            {
+                Log.Logger.Error(e.ToString());
+            }
         }
     }
 }

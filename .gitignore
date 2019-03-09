@@ -5,3 +5,8 @@
 /AvaloniaApplication1/obj
 /audio.sql
 /DataGrid
+*.log
+*.dll
+*.dylib
+*.so
+*.exe

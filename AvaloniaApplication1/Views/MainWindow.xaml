@@ -16,6 +16,7 @@
     <vm:MainWindowViewModel/>
   </Design.DataContext>
 
+
   <DockPanel>
         <!--<DockPanel.Resources>
             <Style>
@@ -30,14 +31,14 @@
           <DockPanel DockPanel.Dock="Right">
             <ListBox Items="{Binding Drives}"/>
           </DockPanel>
-          
+
           <ListBox Tag="{Binding}" Items="{Binding DivineServices.Rows}">
             <ListBox.ItemTemplate>
               <DataTemplate>
                 <ItemsControl Items="{Binding Converter={StaticResource ViewItemConverter}}">
                   <ItemsControl.DataTemplates>
                     <DataTemplate DataType="{x:Type vm:ViewItemButton}">
-                       <Button Tag="{Binding}" DockPanel.Dock="Right" Content=" > "/>
+                      <Button Tag="{Binding}" DockPanel.Dock="Right" Content=" > "/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vm:LastViewItemObject}">
                       <DockPanel>
@@ -52,26 +53,35 @@
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                       <DockPanel>
-                      <!--<StackPanel Orientation="Horizontal">-->
+                        <!--<StackPanel Orientation="Horizontal">-->
                         <!--<Button DockPanel.Dock="Right" Content=" > "/>-->
                       </DockPanel>
                     </ItemsPanelTemplate>
                   </ItemsControl.ItemsPanel>
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                    <ContentControl Content="{Binding}"/>
+                      <ContentControl Content="{Binding}"/>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
-          
+
         </DockPanel>
       </TabItem>
+      
       <TabItem Header="Fehler">
         <ListBox Items="{Binding Errors}"/>
       </TabItem>
-  </TabControl>
+      
+      <TabItem Header="Einstellungen">
+        <Grid ColumnDefinitions="*,*" RowDefinitions="auto,auto,auto,*">
+          <Button Content="OK" Command="{Binding SaveSettingsCommand}"/>
+          <TextBlock  Grid.Row="1" Text="ServerName:"/>
+          <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ServerName}"/>
+        </Grid>
+      </TabItem>
+    </TabControl>
   </DockPanel>
 </Window>
