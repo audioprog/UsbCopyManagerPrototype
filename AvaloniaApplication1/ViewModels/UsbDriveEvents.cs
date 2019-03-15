@@ -4,9 +4,37 @@ using System.Runtime.InteropServices;
 
 namespace AvaloniaApplication1.ViewModels
 {
+    public enum VolumeEventType
+    {
+        Inserted,
+        Removed
+    }
+
+    public delegate void UsbVolumeChangeEventDelegate(object sender, UsbVolumeChangeEventArgs e);
+
+
+    public class UsbVolumeChangeEventArgs : EventArgs
+    {
+        public UsbVolumeChangeEventArgs(VolumeEventType eventType, string name, string driveLetter)
+        {
+            EventType = eventType;
+            Name = name;
+            DriveLetter = driveLetter;
+        }
+
+        public VolumeEventType EventType { get; }
+
+        public string Name { get; }
+
+        public string DriveLetter { get; }
+    }
+
+
     public class UsbDriveEvents
     {
         private Process process;
+
+        public UsbVolumeChangeEventDelegate DriveEvent;
 
         public UsbDriveEvents()
         {
@@ -41,6 +69,19 @@ namespace AvaloniaApplication1.ViewModels
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.OutputDataReceived += (sender, data) => {
+                    string[] splitted = data.Data.Split('|');
+                    if (splitted.Length > 1)
+                    {
+                        switch (splitted[0])
+                        {
+                            case "Inserted":
+                                DriveEvent?.Invoke(this, new UsbVolumeChangeEventArgs(VolumeEventType.Inserted, splitted[1], splitted[splitted.Length - 1]));
+                                break;
+                            case "Removed":
+                                DriveEvent?.Invoke(this, new UsbVolumeChangeEventArgs(VolumeEventType.Removed, "", splitted[1]));
+                                break;
+                        }
+                    }
                     Console.WriteLine(data.Data);
                 };
                 process.StartInfo.RedirectStandardError = true;
