@@ -105,6 +105,8 @@ namespace AvaloniaApplication1.ViewModels
             }
 
             SaveSettingsCommand = ReactiveCommand.Create(() => { Settings.SaveSettings(); });
+
+            //DriveEvents.
         }
 
         public ViewMainHeader MainHeader { get; } = new ViewMainHeader();
@@ -162,7 +164,15 @@ namespace AvaloniaApplication1.ViewModels
         public ObservableCollection<string> Drives { get; set; } = new ObservableCollection<string>();
 
 
+        private UsbDriveEvents DriveEvents { get; } = new UsbDriveEvents();
+
+
         public ICommand SaveSettingsCommand { get; }
 
+
+        public void UsbVolumeChangeEventHandler(object sender, UsbVolumeChangeEventArgs args)
+        {
+
+        }
     }
 }
