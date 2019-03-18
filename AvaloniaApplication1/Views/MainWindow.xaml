@@ -12,10 +12,6 @@
       
   </Window.Resources>
   
-  <Design.DataContext>
-    <vm:MainWindowViewModel/>
-  </Design.DataContext>
-
 
   <DockPanel>
         <!--<DockPanel.Resources>

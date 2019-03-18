@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using System.ComponentModel;
 using Serilog;
 using System;
+using AvaloniaApplication1.ViewModels;
 
 namespace AvaloniaApplication1.Views
 {
@@ -15,6 +16,13 @@ namespace AvaloniaApplication1.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+
+            this.Closed += (a, b) => {
+                if (this.DataContext is MainWindowViewModel viewModel)
+                {
+                    viewModel.Dispose();
+                }
+            };
         }
 
         private void InitializeComponent()

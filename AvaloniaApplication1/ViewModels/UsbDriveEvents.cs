@@ -30,8 +30,12 @@ namespace AvaloniaApplication1.ViewModels
     }
 
 
-    public class UsbDriveEvents
+    public class UsbDriveEvents : IDisposable
     {
+        ~UsbDriveEvents()
+        {
+            Dispose();
+        }
 
         private string cache = string.Empty;
 
@@ -47,7 +51,7 @@ namespace AvaloniaApplication1.ViewModels
                 process.StartInfo.FileName = "udevadm";
                 process.StartInfo.Arguments = "monitor --udev --property";
                 process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.CreateNoWindow = false;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.OutputDataReceived += (sender, data) => {
                     // start mit "UDEV  ["
@@ -93,6 +97,14 @@ namespace AvaloniaApplication1.ViewModels
                     Console.WriteLine(data.Data);
                 };
                 process.Start();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (process != null)
+            {
+                process.Kill();
             }
         }
     }
