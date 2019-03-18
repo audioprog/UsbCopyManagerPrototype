@@ -6,6 +6,8 @@ namespace AvaloniaApplication1.ViewModels
 {
     public class UsbDriveEvents
     {
+        private string cache = string.Empty;
+
         public UsbDriveEvents()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -18,6 +20,7 @@ namespace AvaloniaApplication1.ViewModels
                 process.StartInfo.RedirectStandardOutput = true;
                 process.OutputDataReceived += (sender, data) => {
                     // start mit "UDEV  ["
+                    cache += data.Data;
                     if (data.Data.StartsWith("ID_FS_TYPE="))
                     {
 
