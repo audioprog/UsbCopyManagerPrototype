@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Timers;
 
 namespace AvaloniaApplication1.ViewModels
 {
@@ -37,6 +38,8 @@ namespace AvaloniaApplication1.ViewModels
             Dispose();
         }
 
+        private Timer timer = new Timer();
+
         private string cache = string.Empty;
 
         private Process process;
@@ -51,10 +54,15 @@ namespace AvaloniaApplication1.ViewModels
                 process.StartInfo.FileName = "udevadm";
                 process.StartInfo.Arguments = "monitor --udev --property";
                 process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = false;
+                process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.OutputDataReceived += (sender, data) => {
                     // start mit "UDEV  ["
+                    if (data?.Data == null)
+                    {
+                        return;
+                    }
+                    
                     cache += data.Data;
                     if (data.Data.StartsWith("ID_FS_TYPE="))
                     {
@@ -67,6 +75,8 @@ namespace AvaloniaApplication1.ViewModels
                     Console.WriteLine(data.Data);
                 };
                 process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -98,10 +108,39 @@ namespace AvaloniaApplication1.ViewModels
                 };
                 process.Start();
             }
+
+            timer.Interval = 100;
+            timer.Elapsed += TimerElapsed;
+            timer.Start();
+        }
+
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            timer.Stop();
+            return;
+            if (process.StandardOutput.Peek() > 0)
+            {
+                System.Text.StringBuilder data = new System.Text.StringBuilder();
+                try
+                {
+                    while (process.StandardOutput.Peek() > 0)
+                    {
+                        data.Append((char)process.StandardOutput.Read());
+                    }
+                }
+                finally
+                {
+                    cache += data;
+                }
+                Console.WriteLine(data);
+            }
+            timer.Start();
         }
 
         public void Dispose()
         {
+            timer.Stop();
+            timer.Dispose();
             if (process != null)
             {
                 process.Kill();
