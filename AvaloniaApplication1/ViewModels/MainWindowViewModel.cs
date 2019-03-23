@@ -106,7 +106,7 @@ namespace AvaloniaApplication1.ViewModels
 
             SaveSettingsCommand = ReactiveCommand.Create(() => { Settings.SaveSettings(); });
 
-            //DriveEvents.
+            DriveEvents.DriveEvent += UsbVolumeChangeEventHandler;
         }
 
         ~MainWindowViewModel()
@@ -177,7 +177,7 @@ namespace AvaloniaApplication1.ViewModels
 
         public void UsbVolumeChangeEventHandler(object sender, UsbVolumeChangeEventArgs args)
         {
-
+            Drives.Append(args.Name + "(" + args.DriveLetter + ")");
         }
 
         #region IDisposable Support

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
-using System.Timers;
 
 namespace AvaloniaApplication1.ViewModels
 {
@@ -38,8 +38,6 @@ namespace AvaloniaApplication1.ViewModels
             Dispose();
         }
 
-        private Timer timer = new Timer();
-
         private string cache = string.Empty;
 
         private Process process;
@@ -57,17 +55,54 @@ namespace AvaloniaApplication1.ViewModels
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.OutputDataReceived += (sender, data) => {
-                    // start mit "UDEV  ["
                     if (data?.Data == null)
                     {
                         return;
                     }
-                    
-                    cache += data.Data;
-                    if (data.Data.StartsWith("ID_FS_TYPE="))
-                    {
 
-                    }//DEVNAME=
+                    cache += data.Data + "\n";
+
+                    string[] cachArray = cache.Split("UDEV  [");
+
+                    if (cachArray.Length > 0)
+                    {
+                        bool lastItemIsMatched = false;
+                        for (int i = 0; i < cachArray.Length; i++)
+                        {
+                            string block = cachArray[i];
+
+                            int indexIdFsType = block.IndexOf("ID_FS_TYPE=");
+                            int indexDevName = block.IndexOf("DEVNAME=");
+
+                            if (indexDevName > -1 && indexIdFsType > -1)
+                            {
+                                indexIdFsType += 11;
+                                int endIndex = block.IndexOf('\n', indexIdFsType);
+                                string idFsType = endIndex == -1 ?
+                                 block.Substring(indexIdFsType) : block.Substring(indexIdFsType, endIndex - indexIdFsType);
+
+                                indexDevName += 8;
+                                endIndex = block.IndexOf('\n', indexDevName);
+                                string devName = endIndex == -1 ? 
+                                 block.Substring(indexDevName) : block.Substring(indexDevName, endIndex - indexDevName);
+                                
+                                if (i == cachArray.Length - 1)
+                                {
+                                    lastItemIsMatched = true;
+                                }
+
+                                DriveEvent?.Invoke(this, new UsbVolumeChangeEventArgs(VolumeEventType.Inserted, devName, idFsType));
+                            }
+                            if (lastItemIsMatched)
+                            {
+                                cache = string.Empty;
+                            }
+                            else if (cachArray.Length > 1)
+                            {
+                                cache = "UDEV  [" + cachArray.Last();
+                            }
+                        }
+                    }
                     Console.WriteLine(data.Data);
                 };
                 process.StartInfo.RedirectStandardError = true;
@@ -108,39 +143,11 @@ namespace AvaloniaApplication1.ViewModels
                 };
                 process.Start();
             }
-
-            timer.Interval = 100;
-            timer.Elapsed += TimerElapsed;
-            timer.Start();
         }
 
-        private void TimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            timer.Stop();
-            return;
-            if (process.StandardOutput.Peek() > 0)
-            {
-                System.Text.StringBuilder data = new System.Text.StringBuilder();
-                try
-                {
-                    while (process.StandardOutput.Peek() > 0)
-                    {
-                        data.Append((char)process.StandardOutput.Read());
-                    }
-                }
-                finally
-                {
-                    cache += data;
-                }
-                Console.WriteLine(data);
-            }
-            timer.Start();
-        }
 
         public void Dispose()
         {
-            timer.Stop();
-            timer.Dispose();
             if (process != null)
             {
                 process.Kill();
