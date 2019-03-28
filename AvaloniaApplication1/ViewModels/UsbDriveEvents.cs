@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using AvaloniaApplication1.Extensions;
 
 namespace AvaloniaApplication1.ViewModels
 {
@@ -16,6 +17,9 @@ namespace AvaloniaApplication1.ViewModels
 
     public class UsbVolumeChangeEventArgs : EventArgs
     {
+        public UsbVolumeChangeEventArgs()
+        {}
+
         public UsbVolumeChangeEventArgs(VolumeEventType eventType, string name, string driveLetter)
         {
             EventType = eventType;
@@ -23,11 +27,11 @@ namespace AvaloniaApplication1.ViewModels
             DriveLetter = driveLetter;
         }
 
-        public VolumeEventType EventType { get; }
+        public VolumeEventType EventType { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public string DriveLetter { get; }
+        public string DriveLetter { get; set; }
     }
 
 
@@ -38,7 +42,7 @@ namespace AvaloniaApplication1.ViewModels
             Dispose();
         }
 
-        private string cache = string.Empty;
+        private UsbVolumeChangeEventArgs newEvent = null;
 
         private Process process;
 
@@ -60,50 +64,38 @@ namespace AvaloniaApplication1.ViewModels
                         return;
                     }
 
-                    cache += data.Data + "\n";
-
-                    string[] cachArray = cache.Split("UDEV  [");
-
-                    if (cachArray.Length > 0)
+                    if (data.Data.StartsWith("UDEV  ["))
                     {
-                        bool lastItemIsMatched = false;
-                        for (int i = 0; i < cachArray.Length; i++)
+                        newEvent = new UsbVolumeChangeEventArgs();
+                        string type = data.Data.Section(']', 1, 1).TrimStart().Section(' ', 0, 0);
+                        if (type == "add")
                         {
-                            string block = cachArray[i];
-
-                            int indexIdFsType = block.IndexOf("ID_FS_TYPE=");
-                            int indexDevName = block.IndexOf("DEVNAME=");
-
-                            if (indexDevName > -1 && indexIdFsType > -1)
-                            {
-                                indexIdFsType += 11;
-                                int endIndex = block.IndexOf('\n', indexIdFsType);
-                                string idFsType = endIndex == -1 ?
-                                 block.Substring(indexIdFsType) : block.Substring(indexIdFsType, endIndex - indexIdFsType);
-
-                                indexDevName += 8;
-                                endIndex = block.IndexOf('\n', indexDevName);
-                                string devName = endIndex == -1 ? 
-                                 block.Substring(indexDevName) : block.Substring(indexDevName, endIndex - indexDevName);
-                                
-                                if (i == cachArray.Length - 1)
-                                {
-                                    lastItemIsMatched = true;
-                                }
-
-                                DriveEvent?.Invoke(this, new UsbVolumeChangeEventArgs(VolumeEventType.Inserted, devName, idFsType));
-                            }
-                            if (lastItemIsMatched)
-                            {
-                                cache = string.Empty;
-                            }
-                            else if (cachArray.Length > 1)
-                            {
-                                cache = "UDEV  [" + cachArray.Last();
-                            }
+                            newEvent.EventType = VolumeEventType.Inserted;
+                        }
+                        else if (type == "remove")
+                        {
+                            newEvent.EventType = VolumeEventType.Removed;
                         }
                     }
-                    Console.WriteLine(data.Data);
+                    else if (newEvent != null)
+                    {
+                        if (data.Data.StartsWith("ID_FS_TYPE="))
+                        {
+                            newEvent.DriveLetter = data.Data.Substring(11);
+                        }
+                        else if (data.Data.StartsWith("DEVNAME="))
+                        {
+                            newEvent.Name = data.Data.Substring(8);
+                        }
+
+                        if (newEvent.DriveLetter != null && newEvent.Name != null)
+                        {
+                            DriveEvent?.Invoke(this, newEvent);
+                            newEvent = null;
+                        }
+                    }
+                    
+                    //Console.WriteLine(data.Data);
                 };
                 process.StartInfo.RedirectStandardError = true;
                 process.ErrorDataReceived += (sender, data) => {
