@@ -11,3 +11,6 @@
 *.so
 *.exe
 /WindowsUsbWatcher/obj/Debug/netcoreapp2.1/*.cache
+*.pdb
+WindowsUsbWatcher/obj/Debug/netcoreapp2.1/TemporaryGeneratedFile_*
+*.cache

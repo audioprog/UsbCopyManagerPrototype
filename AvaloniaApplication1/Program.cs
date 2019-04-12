@@ -1,4 +1,7 @@
-﻿using AvaloniaApplication1.ViewModels;
+﻿using Avalonia;
+using AvaloniaApplication1.ViewModels;
+using AvaloniaApplication1.Views;
+using Serilog;
 
 namespace AvaloniaApplication1
 {
