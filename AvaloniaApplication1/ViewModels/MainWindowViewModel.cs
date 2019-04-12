@@ -42,7 +42,7 @@ namespace AvaloniaApplication1.ViewModels
 
             try
             {
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 2, 1);
                 DateTime nextMonth = date.AddMonths(1);
                 Query query = new Query(
                     new QTable(Settings.DivineService.TableName, null), (QField)"Datum" >= (QConst)date & (QField)"Datum" < (QConst)nextMonth).Select(fields.ToArray());

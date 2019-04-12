@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <ApplicationIcon />
+    <ApplicationIcon/>
     <StartupObject>AvaloniaApplication1.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
@@ -12,22 +12,23 @@
     <EmbeddedResource Include="**\*.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\*" />
+    <EmbeddedResource Include="Assets\*"/>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="DefaultTheme.xaml" />
-    <None Remove="Views\OnScreenKeyboard.xaml" />
+    <None Remove="DefaultTheme.xaml"/>
+    <None Remove="Views\OnScreenKeyboard.xaml"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.7.0" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.7.0" />
-    <PackageReference Include="MySqlConnector" Version="0.49.3" />
-    <PackageReference Include="NReco.Data" Version="1.0.5" />
-    <PackageReference Include="Avalonia" Version="0.7.0" />
-    <PackageReference Include="Serilog" Version="2.8.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.0"/>
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.0"/>
+    <PackageReference Include="MySqlConnector" Version="0.49.3"/>
+    <PackageReference Include="NReco.Data" Version="1.0.5"/>
+    <PackageReference Include="Avalonia" Version="0.8.0"/>
+    <PackageReference Include="Serilog" Version="2.8.0"/>
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1"/>
+    <PackageReference Include="Serilog.Sinks.File" Version="4.0.0"/>
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0"/>
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="*"/>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="DefaultTheme.xaml">
