@@ -13,3 +13,4 @@
 /WindowsUsbWatcher/obj/Debug/netcoreapp2.1/*.cache
 *.pdb
 /WindowsUsbWatcher/obj
+WindowsUsbWatcher/obj/project.assets.json
