@@ -1,0 +1,5 @@
+E:\Projekte\AvaloniaApplication1\WindowsUsbWatcher\bin\Debug\netcoreapp3.0\WindowsUsbWatcher.exe
+E:\Projekte\AvaloniaApplication1\WindowsUsbWatcher\obj\Debug\netcoreapp3.0\WindowsUsbWatcher.csprojAssemblyReference.cache
+E:\Projekte\AvaloniaApplication1\WindowsUsbWatcher\obj\Debug\netcoreapp3.0\WindowsUsbWatcher.csproj.CoreCompileInputs.cache
+E:\Projekte\AvaloniaApplication1\WindowsUsbWatcher\obj\Debug\netcoreapp3.0\WindowsUsbWatcher.AssemblyInfoInputs.cache
+E:\Projekte\AvaloniaApplication1\WindowsUsbWatcher\obj\Debug\netcoreapp3.0\WindowsUsbWatcher.AssemblyInfo.cs

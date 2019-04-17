@@ -1,9 +1,4 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Logging.Serilog;
-using AvaloniaApplication1.ViewModels;
-using AvaloniaApplication1.Views;
-using Serilog;
+﻿using AvaloniaApplication1.ViewModels;
 
 namespace AvaloniaApplication1
 {
@@ -21,9 +16,8 @@ namespace AvaloniaApplication1
         }
 
         public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .UseReactiveUI()
-                .LogToDebug();
+             => AppBuilder.Configure<App>()
+                  .UsePlatformDetect()
+                  .UseDataGrid();
     }
 }

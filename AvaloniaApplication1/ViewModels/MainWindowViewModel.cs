@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace AvaloniaApplication1.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, IDisposable
     {
         public MainWindowViewModel()
         {
@@ -42,7 +42,7 @@ namespace AvaloniaApplication1.ViewModels
 
             try
             {
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 2, 1);
                 DateTime nextMonth = date.AddMonths(1);
                 Query query = new Query(
                     new QTable(Settings.DivineService.TableName, null), (QField)"Datum" >= (QConst)date & (QField)"Datum" < (QConst)nextMonth).Select(fields.ToArray());
@@ -105,6 +105,13 @@ namespace AvaloniaApplication1.ViewModels
             }
 
             SaveSettingsCommand = ReactiveCommand.Create(() => { Settings.SaveSettings(); });
+
+            DriveEvents.DriveEvent += UsbVolumeChangeEventHandler;
+        }
+
+        ~MainWindowViewModel()
+        {
+            Dispose();
         }
 
         public ViewMainHeader MainHeader { get; } = new ViewMainHeader();
@@ -162,7 +169,50 @@ namespace AvaloniaApplication1.ViewModels
         public ObservableCollection<string> Drives { get; set; } = new ObservableCollection<string>();
 
 
+        private UsbDriveEvents DriveEvents { get; } = new UsbDriveEvents();
+
+
         public ICommand SaveSettingsCommand { get; }
 
+
+        public void UsbVolumeChangeEventHandler(object sender, UsbVolumeChangeEventArgs args)
+        {
+            Drives.Append(args.Name + "(" + args.DriveLetter + ")");
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    DriveEvents.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~MainWindowViewModel() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

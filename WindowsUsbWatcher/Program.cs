@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Management;
 
 namespace WindowsUsbWatcher
@@ -21,11 +24,21 @@ namespace WindowsUsbWatcher
             watcher.EventArrived += (s, e) =>
             {
                 string driveName = e.NewEvent.Properties["DriveName"].Value.ToString();
+
+                DriveInfo[] drives = DriveInfo.GetDrives();
+
+                IEnumerable<DriveInfo> infos = from driveInfo in drives where driveInfo.Name.StartsWith(driveName) select driveInfo;
+
+                if (infos.Count() > 0)
+                {
+                    driveName = infos.First().VolumeLabel + "|" + driveName;
+                }
+
                 EventType eventType = (EventType)(Convert.ToInt16(e.NewEvent.Properties["EventType"].Value));
 
                 string eventName = Enum.GetName(typeof(EventType), eventType);
 
-                Console.WriteLine("{0} {1}", eventName, driveName);
+                Console.WriteLine("{0}|{1}", eventName, driveName);
             };
 
             watcher.Query = query;

@@ -12,10 +12,6 @@
       
   </Window.Resources>
   
-  <Design.DataContext>
-    <vm:MainWindowViewModel/>
-  </Design.DataContext>
-
 
   <DockPanel>
         <!--<DockPanel.Resources>
@@ -29,7 +25,7 @@
       <TabItem Header="Beiträge">
         <DockPanel>
           <DockPanel DockPanel.Dock="Right">
-            <ListBox Items="{Binding Drives}"/>
+            <ListBox Items="{Binding Drives, Mode=OneWay}" MinWidth="200"/>
           </DockPanel>
 
           <ListBox Tag="{Binding}" Items="{Binding DivineServices.Rows}">
