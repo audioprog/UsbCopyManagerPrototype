@@ -9,7 +9,7 @@
 
   <Window.Resources>
     <vm:ViewItemConverter x:Key="ViewItemConverter"/>
-      
+    <vm:DateConverter x:Key="DateConverter"/>
   </Window.Resources>
   
 
@@ -28,42 +28,21 @@
             <ListBox Items="{Binding Drives, Mode=OneWay}" MinWidth="200"/>
           </DockPanel>
 
-          <ListBox Tag="{Binding}" Items="{Binding DivineServices.Rows}">
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <ItemsControl Items="{Binding Converter={StaticResource ViewItemConverter}}">
-                  <ItemsControl.DataTemplates>
-                    <DataTemplate DataType="{x:Type vm:ViewItemButton}">
-                      <Button Tag="{Binding}" DockPanel.Dock="Right" Content=" > "/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:LastViewItemObject}">
-                      <DockPanel>
-                        <Button Tag="{Binding}" DockPanel.Dock="Right" Content=" > "/>
-                        <TextBlock Background="{Binding BackgroundColor}"  FontSize="18" TextAlignment="Left" Text="{Binding Text}" MinWidth="{Binding Width}"/>
-                      </DockPanel>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:ViewItemObject}">
-                      <TextBlock Background="{Binding BackgroundColor}"  FontSize="18" TextAlignment="Center" Text="{Binding Text}" MinWidth="{Binding Width}"/>
-                    </DataTemplate>
-                  </ItemsControl.DataTemplates>
-                  <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                      <DockPanel>
-                        <!--<StackPanel Orientation="Horizontal">-->
-                        <!--<Button DockPanel.Dock="Right" Content=" > "/>-->
-                      </DockPanel>
-                    </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <ContentControl Content="{Binding}"/>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
-
+          <DataGrid Items="{Binding DivineServices.Rows}">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header=""
+                                  Binding="{Binding ItemArray[1].Day}"/>
+              <DataGridTextColumn Header="Zeit"
+                                  Binding="{Binding ItemArray[1],Converter={StaticResource DateConverter},ConverterParameter=\{0:ddd\}}"/>
+              <DataGridTextColumn Header="Tageszeit"
+                                  Binding="{Binding ItemArray[2]}"/>
+              <DataGridTextColumn Header="Info"
+                                  Binding="{Binding ItemArray[3]}"/>
+            </DataGrid.Columns>
+            <DataGrid.RowBackground>
+              <SolidColorBrush Color="white"/>
+            </DataGrid.RowBackground>
+          </DataGrid>
         </DockPanel>
       </TabItem>
       

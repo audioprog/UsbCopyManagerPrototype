@@ -949,23 +949,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\leo\\.nuget\\packages\\": {},
+    "C:\\Users\\audio\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projekte\\AvaloniaApplication1\\WindowsUsbWatcher\\WindowsUsbWatcher.csproj",
+      "projectUniqueName": "D:\\Programme\\UsbCopyManagerPrototype\\WindowsUsbWatcher\\WindowsUsbWatcher.csproj",
       "projectName": "WindowsUsbWatcher",
-      "projectPath": "E:\\Projekte\\AvaloniaApplication1\\WindowsUsbWatcher\\WindowsUsbWatcher.csproj",
-      "packagesPath": "C:\\Users\\leo\\.nuget\\packages\\",
-      "outputPath": "E:\\Projekte\\AvaloniaApplication1\\WindowsUsbWatcher\\obj\\",
+      "projectPath": "D:\\Programme\\UsbCopyManagerPrototype\\WindowsUsbWatcher\\WindowsUsbWatcher.csproj",
+      "packagesPath": "C:\\Users\\audio\\.nuget\\packages\\",
+      "outputPath": "D:\\Programme\\UsbCopyManagerPrototype\\WindowsUsbWatcher\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\leo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\audio\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -973,13 +973,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/aspnet-aspnetcore-tooling/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/aspnet-aspnetcore/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/aspnet-entityframeworkcore/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/aspnet-extensions/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.1": {
